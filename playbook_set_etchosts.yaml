@@ -1,0 +1,18 @@
+---
+- name: Set all IPv4 to file hosts
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: "host to all host from group 'horizon'"
+      ansible.builtin.blockinfile:
+        # dest: /etc/hosts
+        path: /etc/hosts
+        block: |
+          {% for host in groups['horizon'] %}
+          # {{ hostvars[host]['ansible_facts']['ansible_hostname'] }} {{ hostvars[host]['ansible_facts']['sys0']['ipv4']['address'] }}
+          # {{ hostvars[host]['ansible_facts']['ansible_hostname'] }} {{ hostvars[host]['ansible_facts']['sys0']['ipv4']['address'] }}
+          # {{ ansible_default_ipv4.address }} {{ ansible_hostname }}
+          '{{ hostname }}'
+          {% endfor %}
+        state: present

@@ -1,0 +1,17 @@
+---
+- name: Set hostname from ansible variable
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: "set hostname {{ hostname }} to host {{ myhosts }}"
+      ansible.builtin.hostname:
+        name: '{{ hostname }}'
+        use: alpine
+      notify:
+        - Reboot server
+
+  handlers:
+    - name: Reboot server
+      ansible.builtin.reboot:
+
