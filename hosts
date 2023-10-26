@@ -3,4 +3,6 @@ h-1 ansible_host=10.1.91.111 hostname=host-1
 h-2 ansible_host=10.1.91.112 hostname=host-2
 h-3 ansible_host=10.1.91.113 hostname=host-3
 
+[single]
+h-1 ansible_host=10.1.91.111 hostname=host-1
 
