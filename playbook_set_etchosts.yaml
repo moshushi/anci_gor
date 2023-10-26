@@ -8,7 +8,7 @@
       ansible.builtin.blockinfile:
         block: |
           {% for item in groups['horizon'] %}
-          {{ hostvars[item]['ansible_host'] }} {{hostvars[item]['hostname'] }}
+          {{ hostvars[item]['ansible_host'] }}    {{hostvars[item]['hostname'] }}
           {% endfor %}
         path: /etc/hosts
         state: present

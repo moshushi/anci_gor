@@ -1,0 +1,18 @@
+---
+- name: Playbook for copy to server container and run it
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: Copy hcs container to the host in /var/tmp
+      ansible.builtin.copy:
+        src: '{{ hcs_container }}'
+        dest: "/var/tmp/{{ hcs_container }}"
+
+    - name: Load docker image to docker
+      community.docker.docker_image_load:
+        path: "/var/tmp/{{ hcs_container }}"
+      register: result
+
+    - name: Sign container
+      ansible.builtin.shell: hvs_sign

@@ -1,2 +1,5 @@
 ansible_user: root
 ansible_become_password: ChangePassword#1
+
+hcs_container: hcs_1.2.10_a94c001a.tar.gz
+image_tag: 1.2.10
