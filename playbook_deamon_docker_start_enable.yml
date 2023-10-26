@@ -1,0 +1,12 @@
+---
+- name: Start daemon docker and add it on default run-level
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: Ensure docker deamon is running and enabled
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+        runlevel: default
