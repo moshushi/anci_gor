@@ -1,0 +1,10 @@
+---
+- name: Add server to onezone
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: adding server to zone one
+      community.docker.docker_container_exec:
+        container: "{{ container_name }}"
+        command: "onezone server-add 0 --name host1 --rpc http://host-1:2633/RPC2"

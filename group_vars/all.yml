@@ -6,3 +6,4 @@ image_tag: 1.2.10
 
 # variable for raft
 oned_conf: /var/lib/docker/volumes/hvol/_data/etc/one/oned.conf
+container_name: hcs

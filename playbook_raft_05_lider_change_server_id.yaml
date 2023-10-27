@@ -1,0 +1,11 @@
+---
+- name: Setup Lider in raft
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: Change Listener adress on Leader
+      ansible.builtin.lineinfile:
+        path: '{{ oned_conf }}'
+        regexp: '^\s*SERVER_ID\s*=\s*'
+        line: "    SERVER_ID     = 0,"

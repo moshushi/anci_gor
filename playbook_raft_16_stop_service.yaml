@@ -1,0 +1,17 @@
+---
+- name: Add server to onezone
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: stopped one
+      community.docker.docker_container_exec:
+        container: '{{ container_name }}'
+        command: su -s "/bin/sh" -c "one -f stop"  oneadmin
+
+    - name: stopped sunstone
+      community.docker.docker_container_exec:
+        container: '{{ container_name }}'
+        command: su -s "/bin/sh" -c "sunstone-server stop"  oneadmin
+
+
