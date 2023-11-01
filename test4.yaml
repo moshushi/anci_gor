@@ -1,0 +1,15 @@
+---
+- name: Setup Lider in raft
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+
+    - name: Comments block
+      ansible.builtin.replace:
+        path: '{{ oned_conf }}'
+        after: "# Executed when a server transits from follower->leader"
+        before: "# Executed when a server transits from leader->follower"
+        # before: "^DEFAULT_COST*$"
+        regexp: '^(.+)$'
+        replace: '# \1'

@@ -1,0 +1,17 @@
+---
+- name: Restart HCS
+  hosts: '{{ myhosts }}'
+  become: true
+  # vars:
+  #   container_name: hcs
+
+  tasks:
+    - name: "Stopped {{ container_name }} on host {{ myhosts }}"
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        state: stopped
+
+    - name: "Started {{ container_name }} on host {{ myhosts }}"
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        state: started

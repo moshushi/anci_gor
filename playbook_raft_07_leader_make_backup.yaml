@@ -1,0 +1,25 @@
+---
+- name: Add server to onezone
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    db_file_01: dump_from_lider_to_second.sql
+
+  tasks:
+    - name: make backup DB
+      community.docker.docker_container_exec:
+        container: '{{ container_name }}'
+        command: 'onedb backup -f -u oneadmin -p horizon -d opennebula {{ db_file_01 }}'
+
+    - name: copy backup to host
+      ansible.builtin.shell: "docker cp {{ container_name }}:/{{ db_file_01 }} /root/{{ db_file_01 }}"
+
+    - name: copy db_file from {{ myhosts }} to host-2
+      synchronize:
+        mode: push
+        # rsync_opts: "-e ssh -p 22"
+        checksum: yes
+        src: "/root/{{ db_file_01 }}"
+        dest: "rsync://host-2/:/root/{{ db_file_01 }}"
+      delegate_to: '{{ myhosts }}'
+

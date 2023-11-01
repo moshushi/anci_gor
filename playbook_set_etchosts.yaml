@@ -12,3 +12,4 @@
           {% endfor %}
         path: /etc/hosts
         state: present
+        marker: ""

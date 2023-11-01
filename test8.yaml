@@ -1,0 +1,30 @@
+---
+- name: Add server to onezone
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    # - name: print hostvars value from key
+    #   ansible.builtin.debug:
+    #     msg:
+    #       # - "{{ hostvars['h-1'].hostname }}"
+    #       - "{{ hostvars['{{ myhosts }}'].hostname }}"
+
+    - name: print hostvars value from key
+      ansible.builtin.debug:
+        msg:
+          # {% set MyHOST='{{ myhosts }}' %}
+          # {% for name in hosts %}
+          # - "{{ hostvars['h-1'].hostname }}"
+          # - "{{ hostvars[hosts].hostname }}"
+          # {% endfor %}
+          {% for item in groups['raft'] %}
+          # - "{{ item }}"
+          - {{ hostvars[item][0].hostname }}
+          {% endfor %}
+
+
+    # - name: adding server to zone one
+    #   community.docker.docker_container_exec:
+    #     container: {{ container_name }}
+    #     command: "onezone server-add 0 --name {{ hostvarshost --rpc http://<IP-ПЕРВОГО-СЕРВЕРА>:2633/RPC2"
