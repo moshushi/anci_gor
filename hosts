@@ -2,6 +2,9 @@
 h-1 ansible_host=10.1.91.111 hostname=host-1
 h-2 ansible_host=10.1.91.112 hostname=host-2
 h-3 ansible_host=10.1.91.113 hostname=host-3
+h-32 ansible_host=10.1.91.32 hostname=h32
+h-89 ansible_host=10.1.91.89 hostname=pps-hor-bnew-1
+h-90 ansible_host=10.1.91.90 hostname=h-90
 
 [single]
 h-1 ansible_host=10.1.91.111 hostname=host-1
