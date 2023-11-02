@@ -1,0 +1,19 @@
+---
+- name: Upload file to ownclouwd
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: We will be upload to {{ webdav_www }}
+      debug:
+        # msg: '{{ lookup("env", "OWNCLOAD_TOKEN") }}'
+        # msg: '{{ some }}'
+        # msg: '{{ webdav_token }}'
+        msg: '{{ hcs_container }}'
+        # msg: "{{ webdav_www }}"
+        # msg: "{{ some_w }}"
+
+    - name: Upload file {{ webdav_www }}.txt to owncload
+      # ansible.builtin.shell: curl -k -T 3.txt -u "1fwiLl7rzy2XKns:123" https://cloud.gorizont-vs.ru/public.php/webdav/2.txt
+      # ansible.builtin.shell: curl -k -T files/3.txt -u {{ webdav_token }}:{{ webdav_password }} {{ webdav_www }}2.txt
+      ansible.builtin.shell: curl -k -T files/{{ hcs_container }} -u {{ webdav_token }}:{{ webdav_password }} {{ webdav_www }}{{ hcs_container }}
+

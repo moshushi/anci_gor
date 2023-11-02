@@ -13,3 +13,11 @@ h-1 ansible_host=10.1.91.111 hostname=host-1
 h-1 ansible_host=10.1.91.111 hostname=host-1
 h-2 ansible_host=10.1.91.112 hostname=host-2
 h-3 ansible_host=10.1.91.113 hostname=host-3
+
+[build]
+b-140 ansible_host=10.1.100.140 build_path="/data/0/releases/"
+
+[webdav]
+webdav ansible_host=cloud.gorizont-vs.ru
+webhost ansible_host=cloud.gorizont-vs.ru
+

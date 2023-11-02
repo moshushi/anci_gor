@@ -173,3 +173,6 @@ files/
 
 # License Files
 .dat
+
+# hosts file
+hosts

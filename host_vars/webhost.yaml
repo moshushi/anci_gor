@@ -1,0 +1,4 @@
+---
+webdav_token : '{{ lookup("env", "OWNCLOAD_TOKEN") }}'
+webdav_password: '{{ lookup("env", "OWNCLOAD_PASSWORD") }}'
+some: '123445'
