@@ -1,5 +1,5 @@
 ---
-webdav_token : '{{ lookup("env", "OWNCLOAD_TOKEN") }}'
+webdav_token : '{{ lookup("env", "OWNCLOUD_TOKEN") }}'
 webdav_password: '{{ lookup("env", "OWNCLOUD_PASSWORD") }}'
 webdav_www: https://cloud.gorizont-vs.ru/public.php/webdav/
 # webdav_www: '{{ lookup("env", "OWNCLOUD_WEBSITE") }}'
