@@ -12,7 +12,19 @@
 
     - name: Waiting for view
       debug:
-        msg:  "Waiting for get message LEADER"
+        msg:  "Waiting for get message Leader"
+
+    - name: Show information about zone -- onezone show 0
+      debug:
+        var: ozshow.stdout_lines
+
+    - name: Get information about zone -- onezone show 0
+      ansible.builtin.shell: docker exec -ti '{{ container_name }}' onezone show 0 | grep follower
+      register: ozshow
+
+    - name: Waiting for view
+      debug:
+        msg:  "Waiting for get message Follower"
 
     - name: Show information about zone -- onezone show 0
       debug:

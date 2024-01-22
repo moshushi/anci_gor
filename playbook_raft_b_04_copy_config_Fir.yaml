@@ -1,0 +1,20 @@
+---
+- name: Setup Part2 step 1-2
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    db_file_01: dump_from_lider_to_{{ second_id_server }}.sql
+
+  tasks:
+
+    - name: copy config files from {{ myhosts }} to {{ second_server_ip }} using Method Pull
+      synchronize:
+        mode: pull
+        src: "{{ item }}"
+        dest: "{{ item }}"
+      delegate_to: '{{ second_server_ip }}'
+      with_items:
+        - "/var/lib/docker/volumes/hvol/_data/auth/.one/"
+        - "/var/lib/docker/volumes/hvol/_data/etc/one/oned.conf"
+      # register: syncfile
+

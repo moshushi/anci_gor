@@ -1,9 +1,9 @@
 ---
-- name: Add server to onezone
+- name: Setup Part2 step 1-2
   hosts: '{{ myhosts }}'
   become: true
   vars:
-    db_file_01: dump_from_lider_to_second.sql
+    db_file_01: dump_from_lider_to_{{ second_id_server }}.sql
 
   tasks:
     - name: make backup DB
@@ -14,12 +14,11 @@
     - name: copy backup to host
       ansible.builtin.shell: "docker cp {{ container_name }}:/{{ db_file_01 }} /root/{{ db_file_01 }}"
 
-    - name: copy db_file from {{ myhosts }} to host-2
+    - name: copy db_file from {{ myhosts }} to {{ second_server_ip }} using Method Pull
       synchronize:
-        mode: push
-        # rsync_opts: "-e ssh -p 22"
-        checksum: yes
+        mode: pull
         src: "/root/{{ db_file_01 }}"
-        dest: "rsync://host-2/:/root/{{ db_file_01 }}"
-      delegate_to: '{{ myhosts }}'
+        dest: "/root/{{ db_file_01 }}"
+      delegate_to: '{{ second_server_ip }}'
+      # register: syncfile
 

@@ -14,9 +14,14 @@ first_server_ip: 10.1.91.75
 first_onezone_server_name: 'server-1'
 # If need use infventory_hostname from file hosts to variable for one zone's name server
 # onezone_server_name: hostvars[inventory_hostname]['inventory_hostname']
+first_id_server: 0
 
+# Settings for Second server onezone comment for user 3-th server
+# second_server_ip: 10.1.91.76
+# second_onezone_server_name: 'server-2'
+# second_id_server: 1
 
-# Settings for Second server onezone
-second_server_ip: 10.1.91.76
-# second_server_ip:10.1.91.77
-seconed_onezone_server_name: 'server-2'
+# Settings for 3-th server onezone comment for user 2-th server
+second_server_ip: 10.1.91.77
+second_onezone_server_name: 'server-3'
+second_id_server: 2
