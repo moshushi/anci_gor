@@ -1,0 +1,4 @@
+RAFT_LEADER_HOOK = [
+    COMMAND = "raft/vip.sh",
+    ARGUMENTS = "leader hcs0 10.0.10.13/24 10.10.10.1"
+]

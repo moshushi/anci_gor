@@ -1,0 +1,33 @@
+---
+- name: Setup Part2 step 4-10
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    db_file_01: dump_from_lider_to_{{ second_id_server }}.sql
+
+  tasks:
+    - name: copy backup from host to container
+      ansible.builtin.shell: "docker cp /root/{{ db_file_01 }} {{ container_name }}:/{{ db_file_01 }}"
+
+    - name: stopped one
+      community.docker.docker_container_exec:
+        container: '{{ container_name }}'
+        command: su -s "/bin/sh" -c "one -f stop"  oneadmin
+
+    - name: stopped sunstone
+      community.docker.docker_container_exec:
+        container: '{{ container_name }}'
+        command: su -s "/bin/sh" -c "sunstone-server stop"  oneadmin
+
+    - name: restore base from backup DB
+      community.docker.docker_container_exec:
+        container: '{{ container_name }}'
+        command: 'onedb restore -f -u oneadmin -p horizon -d opennebula {{ db_file_01 }}'
+
+    - name: kill container
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        force_kill: yes
+
+
+

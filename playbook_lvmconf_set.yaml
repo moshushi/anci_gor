@@ -1,0 +1,11 @@
+---
+- name: Create correct /etc/lvm/lvm.conf file
+  hosts: '{{ myhosts }}'
+  become: true
+  
+  tasks:
+    - name: Set parameter to file
+      ansible.builtin.lineinfile:
+        path: /etc/lvm/lvm.conf
+        regexp: '^\s*global_filter\s=.*$'
+        line: '        global_filter = [ "a|.*/|" ]'

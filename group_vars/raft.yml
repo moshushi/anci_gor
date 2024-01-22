@@ -1,0 +1,27 @@
+ansible_python_interpreter: "/usr/bin/python"
+ip_raft_leader: 10.1.91.132
+ip_raft_follower: 10.1.91.133
+port_raft: hcs0
+ip_raft_floating: 10.1.91.80/24
+gw_raft_floating: 10.1.91.1
+container_name: hcs
+
+# Settings for First server onezone
+
+first_server_ip: 10.1.91.75
+# If need use inventory ip from file hosts to variable for IP first server
+# first_server_ip: hostvars[inventory_hostname]['ansible_host']
+first_onezone_server_name: 'server-1'
+# If need use infventory_hostname from file hosts to variable for one zone's name server
+# onezone_server_name: hostvars[inventory_hostname]['inventory_hostname']
+first_id_server: 0
+
+# Settings for Second server onezone comment for user 3-th server
+# second_server_ip: 10.1.91.76
+# second_onezone_server_name: 'server-2'
+# second_id_server: 1
+
+# Settings for 3-th server onezone comment for user 2-th server
+second_server_ip: 10.1.91.77
+second_onezone_server_name: 'server-3'
+second_id_server: 2

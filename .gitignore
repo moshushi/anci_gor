@@ -170,3 +170,9 @@ files/
 
 # Backups SQL
 .sql
+
+# License Files
+.dat
+
+# hosts file
+hosts

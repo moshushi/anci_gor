@@ -1,0 +1,16 @@
+---
+- name: Fetch Horizon OS iso from local repository
+  hosts: '{{ myhosts }}'
+  vars:
+    hor_iso_file: core-2.11.3-24.01.21.iso
+    hor_iso_url: "http://10.1.100.110/core/{{ hor_iso_file }}"
+    deb_qcow_file: debian-12-nocloud-amd64.qcow2
+    deb_qcow_url: "https://cloud.debian.org/images/cloud/bookworm/latest/{{ deb_qcow_file }}"
+    deb_raw_file: debian-12-nocloud-amd64.raw
+    deb_raw_url: "https://cloud.debian.org/images/cloud/bookworm/latest/{{ deb_raw_file }}"
+
+  tasks:
+    - name: Fethings {{ hor_iso_file }} to /var/tmp
+      ansible.builtin.get_url:
+        url: '{{ hor_iso_url }}'
+        dest: '/var/tmp/{{ hor_iso_file }}'

@@ -1,0 +1,26 @@
+---
+- name: Setup Part1 step 9
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    onz_id_server: '{{ second_id_server }}'
+
+  tasks:
+    - name: Change Server_ID to {{ onz_id_server }} on Leader
+      ansible.builtin.lineinfile:
+        path: '{{ oned_conf }}'
+        regexp: (^\s*SERVER_ID\s*=\s*)
+        # line: "    SERVER_ID     = 0,"
+        # line: \g<1>0,
+        line: \g<1>{{ onz_id_server}},
+        backrefs: yes
+
+    - name: "Stopped {{ container_name }} on host {{ myhosts }}"
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        state: stopped
+
+    - name: "Started {{ container_name }} on host {{ myhosts }}"
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        state: started

@@ -1,0 +1,11 @@
+---
+- name: Setup RAFT Part 2 step 11
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    ozs_name: '{{ second_onezone_server_name }}'
+    onz_id_server: 0 # number of zone
+
+  tasks:
+    - name: adding server {{ ozs_name }} to onezone {{ onz_id_server }}
+      ansible.builtin.shell: docker exec -ti '{{ container_name }}' onezone show 0 | grep '{{ ozs_name }}' || docker exec -ti '{{ container_name }}' onezone server-add '{{ onz_id_server }}' --name '{{ ozs_name }}' --rpc http://'{{ second_server_ip }}':2633/RPC2

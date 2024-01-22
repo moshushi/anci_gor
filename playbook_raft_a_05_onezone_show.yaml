@@ -1,0 +1,20 @@
+---
+- name: Setup Part1 step 8
+  hosts: '{{ myhosts }}'
+  become: true
+  # vars:
+  #   ozs_name: '{{ first_onezone_server_name }}'
+
+  tasks:
+    - name: Get information about zone -- onezone show 0
+      # ansible.builtin.shell: docker exec -ti '{{ container_name }}' onezone show 0
+      ansible.builtin.shell: docker exec -ti '{{ container_name }}' onezone show 0 | grep solo
+      register: ozshow
+
+    - name: Waiting for view
+      debug:
+        msg:  "Waiting for get message SOLO"
+
+    - name: Show information about zone -- onezone show 0
+      debug:
+        var: ozshow.stdout_lines

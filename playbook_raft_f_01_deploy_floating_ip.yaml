@@ -1,0 +1,59 @@
+---
+- name: Setup RAFT FLOATING
+  hosts: '{{ myhosts }}'
+  # hosts: h-115
+  become: true
+  vars:
+    main_br: 'hvssw0'
+    raft_net_port: 'hcs0'
+
+  tasks:
+    - name: Step 1-2.. Add port {{ raft_net_port }} to Open vSwitch {{ main_br }} and set type internal
+      openvswitch.openvswitch.openvswitch_port:
+        bridge: '{{ main_br }}'
+        port: '{{ port_raft }}'
+        state: present
+        set: interface {{ raft_net_port }} type=internal
+
+    - name: Step 3.. Create symbol link net.hcs0 to net.lo
+      ansible.builtin.file:
+        path: /etc/init.d/net.{{ raft_net_port }}
+        # path: /etc/init.d/net.hcs0
+        src: /etc/init.d/net.lo
+        state: link
+
+    - name: Step 4.. Add {{ raft_net_port }} to /etc/conf.d/net file
+      ansible.builtin.blockinfile:
+        path: /etc/conf.d/net
+        marker: "## {mark} Floating RAFT interface"
+        block: "{{ lookup('template', 'template/conf.d-net.hcs0.j2') }}
+
+    - name: Step 5-6.. Enable deamon for network interface {{ raft_net_port }}
+      ansible.builtin.service:
+        name: net.{{ raft_net_port }}
+        state: started
+        runlevel: default
+
+    - name: Step 7.. Part 1.. Insert data to RAFT_LEADER_HOOK
+      ansible.builtin.blockinfile:
+        path: '{{ oned_conf }}'
+        insertafter: "# Executed when a server transits from follower->leader"
+        marker: "## {mark} modify change RAFT to LEADER"
+        block: "{{ lookup('template', 'templates/oned-conf.leader.j2') }}"
+
+    - name: Step 7.. Part 2.. Insert data to RAFT_FOLLOWER_HOOK
+      ansible.builtin.blockinfile:
+        path: '{{ oned_conf }}'
+        insertafter: "# Executed when a server transits from leader->follower"
+        marker: "## {mark} modify change RAFT to FOLLOWER"
+        block: "{{ lookup('template', 'templates/oned-conf.follower.j2') }}"
+
+    - name: Step 8.. Part 1.. Stopped {{ container_name }} on host {{ myhosts }}
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        state: stopped
+
+    - name: Step 8.. Part2  Started {{ container_name }} on host {{ myhosts }}
+      community.docker.docker_container:
+        name: '{{ container_name }}'
+        state: started

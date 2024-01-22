@@ -1,0 +1,24 @@
+---
+- name: Copy license file to host-server
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: copy license file
+      ansible.builtin.copy:
+        src: 'lic/{{ licnumber }}/license.dat'
+        dest: '/etc/license.dat'
+      notify: 
+        - Restart Keeper
+        - Restart Virtlogd
+
+  handlers:
+    - name: Restart Keeper
+      service: 
+        name: keeper
+        state: restarted
+
+    - name: Restart Virtlogd
+      service: 
+        name: virtlogd
+        state: restarted

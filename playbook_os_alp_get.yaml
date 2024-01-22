@@ -1,0 +1,9 @@
+---
+- name: get debian-nocloud image
+  hosts: '{{ myhosts }}'
+
+  tasks:
+    - name: get alpine iso
+      ansible.builtin.get_url:
+        url: '{{ alp_iso_url }}'
+        dest: '/var/tmp/{{ alp_iso_file }}' 

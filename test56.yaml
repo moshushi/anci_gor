@@ -1,0 +1,29 @@
+---
+- name: Setup RAFT FLOATING
+  # hosts: '{{ myhosts }}'
+  hosts: h-115
+  become: true
+  vars:
+    # main_br: 'hvssw0'
+    raft_net_port: 'hcs0'
+
+  tasks:
+    # - name: Step 1-2.. Add port {{ raft_net_port }} to Open vSwitch {{ main_br }} and set type internal
+    #   openvswitch.openvswitch.openvswitch_port:
+    #     bridge: '{{ main_br }}'
+    #     port: '{{ port_raft }}'
+    #     state: present
+    #     set: interface {{ raft_net_port }} type=internal
+
+    - name: Create symbol link net.lo net.hcs0
+      ansible.builtin.file:
+        path: /etc/init.d/net.hcs0
+        src: /etc/init.d/net.lo
+        state: link
+    # - name: Step 3.. Create symbol link net.hcs0 to net.lo
+    #   ansible.builtin.file:
+    #     # src: /etc/init.d/net.{{ raft_net_port }}
+    #     src: /etc/init.d/net.hcs0
+    #     dest: /etc/init.d/net.lo
+    #     state: link
+

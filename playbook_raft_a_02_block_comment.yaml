@@ -1,0 +1,23 @@
+---
+- name: Setup RAFT Part2 step 3-4
+  hosts: '{{ myhosts }}'
+  # hosts: h-75
+  become: true
+  vars:
+    oned_conf : /var/lib/docker/volumes/hvol/_data/etc/one/oned.conf
+    # oned_conf : /root/oned.conf
+
+  tasks:
+    - name: Remove parameters RAFT_LEADER_HOOK
+      ansible.builtin.replace:
+        path: '{{ oned_conf }}'
+        after: "# Executed when a server transits from follower->leader"
+        regexp: ^RAFT_LEADER_HOOK(.*\n){4}
+        replace: ''
+
+    - name: Remove parameters RAFT_FOLLOWER_HOOK
+      ansible.builtin.replace:
+        path: '{{ oned_conf }}'
+        after: "# Executed when a server transits from leader->follower"
+        regexp: ^RAFT_FOLLOWER_HOOK(.*\n){4}
+        replace: ''

@@ -1,0 +1,22 @@
+---
+- name: Add port to switch
+  # hosts: '{{ myhosts }}'
+  hosts: h-115
+  become: true
+  vars:
+    main_br: 'hvssw0'
+    raft_net_port: 'hcs0'
+
+  tasks:
+    - name: Add interface {{ raft_net_port }} to virtual switch {{ main_br }}
+      openvswitch.openvswitch.openvswitch_port:
+        bridge: '{{ main_br }}'
+        port: '{{ port_raft }}'
+        state: present
+        # set: interface {{ raft_net_port }} type=internal
+        # set: interface {{ raft_net_port }}
+        # set: Interface internal
+        # set: interface {{ raft_net_port }} type=internal
+        set: interface {{ raft_net_port }} type=internal
+        # set: interface hcs0 type=internal
+

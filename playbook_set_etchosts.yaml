@@ -1,5 +1,5 @@
 ---
-- name: Set all IPv4 to file hosts
+- name: Set all IPv4 to file hosts for group horizon
   hosts: '{{ myhosts }}'
   become: true
 

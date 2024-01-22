@@ -1,0 +1,11 @@
+---
+- name: Fetch HCS container to directory files
+  hosts: b-140
+
+  tasks:
+    - name: 'Fetch from {{ hosts }} {{ hcs_container }} to directory files'
+      ansible.builtin.fetch:
+        src: "{{ build_path }}/{{ hcs_container }}"
+        dest: files/
+        flat: true
+

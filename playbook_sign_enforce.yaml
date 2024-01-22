@@ -1,0 +1,31 @@
+---
+- name: Enable signature verification
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    # - name: Mount up device by label
+    #   ansible.posix.mount:
+    #     path: /boot
+    #     src: LABEL=HB2112
+    #     fstype: auto
+    #     state: present
+
+    - name: Mount up from command
+      ansible.builtin.shell: mountpoint -q /boot || mount /boot
+
+    - name: Change sing to enforce
+      ansible.builtin.replace:
+        path: "{{ item }}"
+        regexp: log(?!HR2112)
+        replace: 'enforce'
+      loop: '{{ hvs_boot_path_file }}'
+      notify:
+        - Reboot Server
+
+    - name: umount down from command
+      ansible.builtin.shell: umount /boot
+
+  handlers:
+    - name: Reboot Server
+      ansible.builtin.reboot:
