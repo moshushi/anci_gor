@@ -26,7 +26,7 @@
       ansible.builtin.blockinfile:
         path: /etc/conf.d/net
         marker: "## {mark} Floating RAFT interface"
-        block: "{{ lookup('template', 'template/conf.d-net.hcs0.j2') }}
+        block: "{{ lookup('ansible.builtin.template', 'templates/conf.d-net.hcs0.j2') }}
 
     - name: Step 5-6.. Enable deamon for network interface {{ raft_net_port }}
       ansible.builtin.service:
@@ -39,14 +39,14 @@
         path: '{{ oned_conf }}'
         insertafter: "# Executed when a server transits from follower->leader"
         marker: "## {mark} modify change RAFT to LEADER"
-        block: "{{ lookup('template', 'templates/oned-conf.leader.j2') }}"
+        block: "{{ lookup('ansible.builtin.template', 'templates/oned-conf.leader.j2') }}"
 
     - name: Step 7.. Part 2.. Insert data to RAFT_FOLLOWER_HOOK
       ansible.builtin.blockinfile:
         path: '{{ oned_conf }}'
         insertafter: "# Executed when a server transits from leader->follower"
         marker: "## {mark} modify change RAFT to FOLLOWER"
-        block: "{{ lookup('template', 'templates/oned-conf.follower.j2') }}"
+        block: "{{ lookup('ansible.builtin.template', 'templates/oned-conf.follower.j2') }}"
 
     - name: Step 8.. Part 1.. Stopped {{ container_name }} on host {{ myhosts }}
       community.docker.docker_container:
