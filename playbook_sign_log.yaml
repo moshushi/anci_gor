@@ -1,0 +1,24 @@
+---
+- name: Enable signature verification
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: Mount up from command
+      ansible.builtin.shell: mountpoint -q /boot || mount /boot
+
+    - name: Change sing from enforce to LOG
+      ansible.builtin.replace:
+        path: "{{ item }}"
+        regexp: enforce(?!HR2112)
+        replace: 'log'
+      loop: '{{ hvs_boot_path_file }}'
+      notify:
+        - Reboot Server
+
+    - name: umount down from command
+      ansible.builtin.shell: umount /boot
+
+  handlers:
+    - name: Reboot Server
+      ansible.builtin.reboot:

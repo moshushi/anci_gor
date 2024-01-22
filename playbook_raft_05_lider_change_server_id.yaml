@@ -1,5 +1,5 @@
 ---
-- name: Setup Lider in raft
+- name: Setup Lider in raft step 9
   hosts: '{{ myhosts }}'
   become: true
 

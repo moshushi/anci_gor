@@ -1,0 +1,21 @@
+---
+- name: Change file use lineinfile
+  hosts: '{{ myhosts }}'
+  become: true
+
+
+  tasks:
+  # - name: Change output_format to json in lvm.conf
+  #   ansible.builtin.replace:
+  #     path: /root/2.txt
+  #     regexp: (^[^#].*)(basic(?!output_format))
+  #     replace: '\1json'
+
+  - name: Change output_format to json in lvm.conf
+    ansible.builtin.lineinfile:
+      path: /root/2.txt
+      regexp: ^\s*output_format\s*=\s*
+      line: '        output_format = "json"'
+      # line: '\1 "json"'
+      backrefs: yes
+      # replace: '\1 "json"'

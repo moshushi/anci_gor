@@ -1,0 +1,33 @@
+---
+- name: Change file use template
+  # hosts: '{{ myhosts }}'
+  hosts: h-75
+  become: true
+  vars:
+    # oned_conf : /var/lib/docker/volumes/hvol/_data/etc/one/oned.conf
+    oned_conf : /root/oned.conf
+
+  tasks:
+    - name: Set paramgeters for Leader
+      ansible.builtin.set_fact:
+        leader_content: "{{ lookup('template', 'templates/oned-conf.leader.j2') }}"
+
+
+    - name: Insert data to RAFT_LEADER_HOOK
+      ansible.builtin.blockinfile:
+        path: '{{ oned_conf }}'
+        insertafter: "# Executed when a server transits from follower->leader"
+        marker: "## {mark} modify change RAFT to LEADER"
+        block: '{{ leader_content }}'
+        state: present
+
+        # block: |
+          # 123
+          # 345
+        # marker_begin: "# Executed when a server transits from follower->leader"
+        # marker_end: '^\s*$'
+        # block: |
+        #   RAFT_LEADER_HOOK = [
+        #   COMMAND = "raft/vip.sh",
+        #   ARGUMENTS = "leader hcs0 10.0.10.13/24 10.10.10.9"
+        #   ]

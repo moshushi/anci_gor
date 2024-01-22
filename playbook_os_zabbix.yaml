@@ -1,0 +1,10 @@
+---
+- name: get debian-nocloud image
+  hosts: '{{ myhosts }}'
+
+  tasks:
+    - name: get alpine iso
+      ansible.builtin.unarchive:
+        url: '{{ zabbix_raw_url }}'
+        dest: '/var/tmp/
+        remote_src: yes

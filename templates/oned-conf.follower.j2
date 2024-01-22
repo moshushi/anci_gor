@@ -1,0 +1,4 @@
+RAFT_FOLLOWER_HOOK = [
+    COMMAND = "raft/vip.sh",
+    ARGUMENTS = "follower {{ adapter_raft_net }} {{ ip_raft_floating }} {{ gw_raft_floating }}"
+]

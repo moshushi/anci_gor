@@ -1,0 +1,4 @@
+RAFT_LEADER_HOOK = [
+    COMMAND = "raft/vip.sh",
+    ARGUMENTS = "leader {{ adapter_raft_net }} {{ ip_raft_floating }} {{ gw_raft_floating }}"
+]

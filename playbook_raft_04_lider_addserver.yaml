@@ -1,5 +1,5 @@
 ---
-- name: Add server to onezone
+- name: Add server to onezone step 6-7
   hosts: '{{ myhosts }}'
   become: true
 

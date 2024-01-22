@@ -1,0 +1,21 @@
+---
+- name: try to mount
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+  - name: Mount up device by label
+    ansible.posix.mount:
+      path: /boot
+      # src: LABEL=HB2112
+      src: /dev/vda1
+      # fstype: auto
+      fstype: vfat
+      state: present
+      # opts: defaults
+      # state: mounted
+  
+  # - name: Check mount
+  #   debug:
+  #     msg: "{{ root_uuid.stdout }}"
+

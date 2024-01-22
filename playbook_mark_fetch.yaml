@@ -1,0 +1,14 @@
+---
+- name: Fetch HCS container to directory files
+  hosts: localhost
+  connection: local
+  # vars:
+  #   web_build_path: "http://10.1.100.110/hcs/git"
+
+  tasks:
+    - name: 'Fetch from {{ hosts }} {{ hcs_container }} to directory files'
+      ansible.builtin.get_url:
+        url: "{{ web_build_path }}/{{ hcs_container }}"
+        dest: files/
+        # flat: true
+

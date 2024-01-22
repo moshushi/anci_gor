@@ -1,0 +1,22 @@
+---
+- name: get info about FC
+  hosts: '{{ myhosts }}'
+  become: yes
+
+  tasks:
+    - name: Get info in result
+      ansible.builtin.shell: systool -c fc_host -v | grep port_state
+      register: fc_result
+
+    - name: Print  fetched information about Fibre Channel Networks
+      ansible.builtin.debug:
+        msg: "{{ fc_result.stdout_lines }}"
+        # msg: "{{ fc_result.stdout }}"
+
+    - name: Get info in result port_name
+      ansible.builtin.shell: systool -c fc_host -v | grep port_name
+      register: fc_result_name
+
+    - name: Print  fetched information about Fibre Channel Networks
+      ansible.builtin.debug:
+        msg: "{{ fc_result_name.stdout_lines }}"

@@ -1,0 +1,12 @@
+---
+- name: Show ansible_mounts filtered
+  hosts: '{{ myhosts }}'
+  gather_facts: true
+
+
+  tasks:
+    - name: Show ansible_mounts
+      debug:
+        var: ansible_facts.mounts
+        # var: ansible_mounts | selectattr('device', 'match', '/dev/nvme0n1p1')
+        # var: ansible_mounts | selectattr('device', 'match', '/dev/sda')

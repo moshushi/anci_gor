@@ -1,0 +1,41 @@
+---
+- name: Setup RAFT Part 1 step 6-7
+  # hosts: '{{ myhosts }}'
+  hosts: h-75
+  become: true
+  vars:
+    ozs_name: '{{ first_onezone_server_name }}'
+
+  tasks:
+    # - name: adding server {{ ozs_name }} to zone one
+    #   community.docker.docker_container_exec:
+    #     container: "{{ container_name }}"
+    #     # command: "onezone show 0 | grep '{{ ozs_name }}' || onezone server-add 0 --name '{{ ozs_name }}' --rpc http://'{{ first_server_ip }}':2633/RPC2"
+    #     command: "onezone show 0 | grep '{{ ozs_name }}' || echo $?"
+    #     # command: "onezone show 0"
+    #     # argv:
+    #     #   - "-it"
+    #   register: result
+
+    # - name: Print stderr lines
+    #   ansible.builtin.debug:
+    #     var: result.stderr_lines
+
+    # - name: Print stderr lines
+    #   ansible.builtin.debug:
+    #     var: result.stdout
+    #     # command: "onezone show 0 | grep '{{ ozs_name }}' || onezone server-add 0 --name '{{ ozs_name }}' --rpc http://'{{ first_server_ip }}':2633/RPC2"
+
+    - name: adding server {{ ozs_name }}
+      # ansible.builtin.shell: docker exec -ti {{ container_name }} onezone show 0
+      # ansible.builtin.shell: docker exec -ti {{ container_name }} onezone show 0 | grep '{{ ozs_name }}' || echo $?
+      ansible.builtin.shell: docker exec -ti {{ container_name }} onezone show 0 | grep '{{ ozs_name }}' || echo $?
+      register: ps
+
+    - name: debug
+      debug:
+        var: ps.stderr_lines
+
+    - name: debug
+      debug:
+        var: ps.stdout_lines

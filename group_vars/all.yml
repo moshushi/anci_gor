@@ -1,11 +1,48 @@
 ansible_user: root
 ansible_become_password: ChangePassword#1
 
-hcs_container: hcs_1.2.11_b41c9539.tar.gz
+# hcs_container: hcs_1.2.8.tar.gz
+# hcs_container: hcs_1.2.10.tar.gz
+# hcs_container: hcs-trans-dep-test.tar.gz
+# hcs_container: hcs_1.2.11_c3a223e2.tar.gz # предрелиз от Сергея
+# hcs_container: hcs_1.2.11.2.tar.gz
+# hcs_container: hcs-1.1.27-ceph-v1.tar.xz
+# hcs_container: hcs-1.1.27-73488ac6.tar.xz # Сборка Марка перепроверить LVM
+# hcs_container: hcs_1.1.27_879c55b23d91.tar.gz # Сборка кирила
+hcs_container: hcs_1.3.0.tar.xz
+# hcs_container: hcs_1.3.1_dbff298e.tar.xz # нормальная версия
 
-image_tag: 1.2.10
-# image_tag: 1.2.9
+# image_tag: latest
+# image_tag: 1.2.11
+# image_tag: 1.2.10
+# image_tag: 1.2.8
+# image_tag: 1.1.27
+# image_tag: 1.1.27-ceph
+image_tag: 1.3.0
+# image_tag: 1.3.1
+
+# licnumber: 9EE59863
+# licnumber: 77E1371B
+# licnumber: D0887801
+# licnumber: 0402A68E
+licnumber: F2667EC4
+# licnumber: universal
 
 # variable for raft
 oned_conf: /var/lib/docker/volumes/hvol/_data/etc/one/oned.conf
 container_name: hcs
+
+# variable for ceph
+ceph_pool: mark
+
+alp_iso_file: alpine-standard-3.18.4-x86_64.iso
+alp_iso_url: "https://dl-cdn.alpinelinux.org/alpine/v3.18/releases/x86_64/{{ alp_iso_file }}"
+zabbix_raw_url: "https://cdn.zabbix.com/zabbix/appliances/stable/6.4/6.4.8/zabbix_appliance-6.4.8-raw.tar.gz"
+
+dns_server: 192.168.2.252
+
+# variable for get-web-local build
+web_build_path: "http://10.1.100.110/hcs/git"
+
+hvs_lvm_label: HR2112   # директория монтирования и запись в /boot
+hvs_boot_path_file: ['/boot/syslinux/syslinux.cfg', '/boot/efi/boot/syslinux.cfg']

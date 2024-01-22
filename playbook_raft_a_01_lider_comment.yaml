@@ -1,0 +1,11 @@
+---
+- name: Setup RAFT Part1 step 1-2
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: Change Listener adress for Leader
+      ansible.builtin.lineinfile:
+        path: '{{ oned_conf }}'
+        regexp: '^LISTEN_ADDRESS = '
+        line: LISTEN_ADDRESS = "0.0.0.0"

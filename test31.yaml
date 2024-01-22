@@ -1,0 +1,31 @@
+---
+- name: get_hostname
+  # hosts: '{{ myhosts }}'
+  hosts: h-90
+  become: true
+  gather_facts: yes
+
+  tasks:
+    - name: Get name of host from hosts file ansible - from hosts
+      debug:
+        msg: "{{ ansible_hostname }}"
+
+    - name: Get name of host from hosts file ansible
+      debug:
+        msg: "{{ groups[target_group] }}"
+      vars:
+        target_group: raft
+
+    - name: Get ansible_node_name
+      debug:
+        msg: "{{ ansible_nodename }}"
+
+    - name: Get ansible variable host_name
+      debug:
+        msg: "{{ hostname }}"
+
+    # - name: Get name of host from hosts file ansible
+    #   debug:
+    #     msg: "{{ hosts[target_hosts] }}"
+    #   vars:
+    #     target_group: raft

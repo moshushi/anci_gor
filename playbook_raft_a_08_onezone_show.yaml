@@ -1,0 +1,17 @@
+---
+- name: Setup Part1 step 11-12
+  hosts: '{{ myhosts }}'
+  become: true
+  # vars:
+  #   ozs_name: '{{ first_onezone_server_name }}'
+
+  tasks:
+    - name: Waiting for view
+      debug:
+        msg:  "Waiting for get message LEADER"
+
+    - name: Show information about zone -- onezone show 0
+      community.docker.docker_container_exec:
+        container: "{{ container_name }}"
+        # command: "onezone show 0 | grep '{{ ozs_name }}' || onezone server-add 0 --name '{{ ozs_name }}' --rpc http://'{{ first_server_ip }}':2633/RPC2"
+        command: "onezone show 0"

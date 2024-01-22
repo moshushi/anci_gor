@@ -1,0 +1,20 @@
+---
+- name: get debian-nocloud image
+  hosts: '{{ myhosts }}'
+  vars:
+    deb_qcow_file: debian-12-nocloud-amd64.qcow2
+    deb_qcow_url: "https://cloud.debian.org/images/cloud/bookworm/latest/{{ deb_qcow_file }}"
+    deb_raw_file: debian-12-nocloud-amd64.raw
+    deb_raw_url: "https://cloud.debian.org/images/cloud/bookworm/latest/{{ deb_raw_file }}"
+
+  tasks:
+    - name: get debian qcow
+      ansible.builtin.get_url:
+        url: '{{ deb_qcow_url }}'
+        dest: '/var/tmp/{{ deb_qcow_file }}' 
+
+    - name: get debian raw
+      ansible.builtin.get_url:
+        url: '{{ deb_raw_url }}'
+        dest: '/var/tmp/{{ deb_raw_file }}' 
+

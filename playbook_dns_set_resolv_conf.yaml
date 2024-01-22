@@ -1,0 +1,29 @@
+---
+- name: Set DNS-servers to resolv.conf
+  hosts: '{{ myhosts }}'
+  become: true
+  # vars:
+  #   file_resolv.conf: /etc/resolv.conf
+
+  tasks:
+    - name: Check if resolv.conf file exists
+      stat:
+        path: /etc/resolv.conf
+      register: file_info
+
+    - name: Create /etc/resolv.conf if it not exists
+      file:
+        path: /etc/resolv.conf
+        state: touch
+      when: not file_info.stat.exists
+
+    - name: Set DNS nameserver in /etc/resolv.conf
+      blockinfile:
+        path: /etc/resolv.conf
+        block: |
+                nameserver {{ dns_server }}
+                nameserver 8.8.8.8
+                nameserver 8.8.4.4
+        state: present
+        # marker: "### ##"
+

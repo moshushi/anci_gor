@@ -1,0 +1,28 @@
+---
+- name: get ip from ansible hosts playbook
+  # hosts: '{{ myhosts }}'
+  hosts: h-90
+  # hosts: h-36
+  gather_facts: yes
+  become: true
+
+  tasks:
+    # - name: Show variable
+    #   debug:
+    #     var: hostvars
+
+    # - name: Show variable
+    #   debug:
+    #     var: hostvars[inventory_hostname]
+
+    - name: Show variable
+      debug:
+        var: hostvars[inventory_hostname]['ansible_host']
+
+    - name: Show variable
+      debug:
+        msg: "{{ hostvars[inventory_hostname]['ansible_host'] }}"
+
+    # - name: get ip from hosts-file ansible
+    #   debug:
+    #     msg: '{{ ansible_host }}'
