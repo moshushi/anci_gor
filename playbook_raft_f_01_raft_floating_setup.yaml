@@ -1,5 +1,5 @@
 ---
-- name: Setup RAFT FLOATING
+- name: Setup RAFT FLOATING --- Need debug block!!!!!!!!!!
   hosts: '{{ myhosts }}'
   # hosts: h-115
   become: true
@@ -26,7 +26,7 @@
       ansible.builtin.blockinfile:
         path: /etc/conf.d/net
         marker: "## {mark} Floating RAFT interface"
-        block: "{{ lookup('ansible.builtin.template', 'templates/conf.d-net.hcs0.j2') }}
+        block: "{{ lookup('ansible.builtin.template', 'templates/conf.d-net.hcs0.j2') }}"
 
     - name: Step 5-6.. Enable deamon for network interface {{ raft_net_port }}
       ansible.builtin.service:
