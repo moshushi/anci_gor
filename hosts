@@ -17,6 +17,9 @@ h-36 ansible_host=10.1.91.36 hostname=h36
 h-75 ansible_host=10.1.91.75 hostname=h-75
 h-76 ansible_host=10.1.91.76 hostname=h-76
 h-77 ansible_host=10.1.91.77 hostname=h-77
+h-114 ansible_host=10.1.91.114 hostname=h-114
+h-115 ansible_host=10.1.91.115 hostname=h-115
+
 
 [horizon:children]
 single

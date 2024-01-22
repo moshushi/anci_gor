@@ -1,4 +1,3 @@
-ansible_python_interpreter: "/usr/bin/python"
 ip_raft_leader: 10.1.91.132
 ip_raft_follower: 10.1.91.133
 port_raft: hcs0
