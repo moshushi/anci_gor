@@ -1,0 +1,21 @@
+---
+- name: Uploadd opennebula to # /etc/sudoers.d/opennebula
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    file_path: upload
+    # upload_file: sudoers.d-opennebula.li
+    upload_file: sudoers.d-opennebula.origin
+    upload_path: /etc/sudoers.d
+    upload_file_target: opennebula
+
+  tasks:
+    - name: upload {{ upload_file }} to server as /etc/sudoers.d/opennebula
+      ansible.builtin.copy:
+        src: '{{ file_path }}/{{ upload_file }}'
+        # src: 'upload/{{ upload_file }}'
+        dest: '{{ upload_path }}/{{ upload_file_target }}'
+        # remote_src: yes
+        owner: root
+        group: root
+        mode: '0440'
