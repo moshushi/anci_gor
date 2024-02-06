@@ -1,0 +1,24 @@
+---
+- name: Enable ssh
+  hosts: '{{ myhosts }}'
+  become: true
+
+  tasks:
+    - name: Set to sshd_config
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: ^PermitRootLogin.*$
+        insertafter: '^#PasswordAuthentication'
+        line: PermitRootLogin yes
+
+    - name: Set to sshd_config
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: ^PasswordAuthentication.*$
+        insertafter: '^#PasswordAuthentication'
+        line: PasswordAuthentication yes
+
+    - name: deamon sshd restart
+      ansible.builtin.service:
+        name: sshd
+        state: restarted

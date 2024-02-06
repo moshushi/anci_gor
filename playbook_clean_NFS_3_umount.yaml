@@ -1,0 +1,38 @@
+---
+- name: Delete files in folder
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    # directory: /data/0/docker/volumes/hvol/_data
+    directory: /data/0/datastores/
+
+  tasks:
+    - name: Get directory listing in {{ directory }} exclude folder 0
+      ansible.builtin.find:
+        path: "{{ directory }}"
+        file_type: directory
+        # file_type: link
+        hidden: yes
+        # recurse: yes
+        excludes: '0'
+      register: directory_content_result
+
+    # - name: debug
+    #   debug:
+    #     msg: '{{ directory_content_result }}'
+
+    - name: Umount all mount point in {{ directory }}
+      ansible.posix.mount:
+        path: "{{ item.path }}"
+        state: unmounted
+      with_items: "{{ directory_content_result.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
+    - name: Remove folder points in {{ directory }}
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ directory_content_result.files }}"
+      loop_control:
+        label: "{{ item.path }}"

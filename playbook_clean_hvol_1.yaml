@@ -1,0 +1,11 @@
+---
+- name: Clear volume containter hvs
+  hosts: '{{ myhosts }}'
+  become: true
+
+
+  tasks:
+    - name: Clear volume hvol
+      docker_volume:
+        name: hvol
+        state: absent

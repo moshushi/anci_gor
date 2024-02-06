@@ -1,0 +1,25 @@
+---
+- name: Delete files in folder
+  hosts: '{{ myhosts }}'
+  become: true
+  vars:
+    # directory: /data/0/docker/volumes/hvol/_data
+    directory: /data/0/datastores/
+
+  tasks:
+    - name: Get recurcively files in {{ directory }}
+      ansible.builtin.find:
+        path: "{{ directory }}"
+        # file_type: any
+        hidden: yes
+        recurse: yes
+        # excludes: '0'
+      register: directory_content_result
+
+    - name: Remove files in {{ directory }}
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ directory_content_result.files }}"
+      loop_control:
+        label: "{{ item.path }}"

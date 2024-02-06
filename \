@@ -1,0 +1,30 @@
+---
+- name: Delete files in folder
+  # hosts: '{{ myhosts }}'
+  hosts: h-36
+  become: true
+  vars:
+    directory: /data/0/datastores
+
+  tasks:
+    - name: Get directory listing
+      find:
+        path: "{{ directory }}"
+        file_type: any
+        hidden: yes
+      register: directory_content_result
+
+    - name: debug
+      debug:
+        var: directory_content_result
+
+        # var: directory_content_result[path]
+        # msg: '{{ directory_content_result }}'
+
+    # - name: Remove directory content
+    #   file:
+    #     path: "{{ item.path }}"
+    #     state: absent
+    #   with_items: "{{ directory_content_result.files }}"
+    #   loop_control:
+    #     label: "{{ item.path }}"

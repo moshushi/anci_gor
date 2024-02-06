@@ -1,24 +1,28 @@
 [horizon]
-h-131 ansible_host=10.1.91.131 hostname=h131
+h-104 ansible_host=10.1.91.104 hostname=h-104
+h-105 ansible_host=10.1.91.105 hostname=h-105
+h-106 ansible_host=10.1.91.106 hostname=h-106
 
 [single]
-h-31 ansible_host=10.1.91.31 hostname=h31
-h-32 ansible_host=10.1.91.32 hostname=h32
+# h-31 ansible_host=10.1.91.31 hostname=h31
+# h-32 ansible_host=10.1.91.32 hostname=h32
 # h-33 ansible_host=10.1.91.33 hostname=h-33
 # h-34 ansible_host=10.1.91.34 hostname=h-34
 # h-35 ansible_host=10.1.91.35 hostname=h-35
-h-36 ansible_host=10.1.91.36 hostname=h36
-# h-37 ansible_host=10.1.91.37 hostname=h-37
-# h22 ansible_host=10.1.100.98 hostname=h22
+# h-36 ansible_host=10.1.91.36 hostname=h36
+h-37 ansible_host=10.1.91.37 hostname=h-37
 
 [raft]
 # h-132 ansible_host=10.1.91.132 hostname=h-132
 # h-90 ansible_host=10.1.91.75 hostname=h-33
-h-75 ansible_host=10.1.91.75 hostname=h-75
-h-76 ansible_host=10.1.91.76 hostname=h-76
-h-77 ansible_host=10.1.91.77 hostname=h-77
-h-114 ansible_host=10.1.91.114 hostname=h-114
-h-115 ansible_host=10.1.91.115 hostname=h-115
+# h-75 ansible_host=10.1.91.75 hostname=h-75
+# h-76 ansible_host=10.1.91.76 hostname=h-76
+# h-77 ansible_host=10.1.91.77 hostname=h-77
+# h-114 ansible_host=10.1.91.114 hostname=h-114
+# h-115 ansible_host=10.1.91.115 hostname=h-115
+h-31 ansible_host=10.1.91.31 hostname=h31
+h-32 ansible_host=10.1.91.32 hostname=h32
+h-36 ansible_host=10.1.91.36 hostname=h36
 
 
 [horizon:children]
