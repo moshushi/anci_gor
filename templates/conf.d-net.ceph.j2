@@ -1,0 +1,6 @@
+config_{{ ceph_if }}="null"
+rc_net_{{ ceph_if }}_provide="net"
+
+config_{{ ceph_br }}="{{ ceph_ip }}"
+rc_net_{{ ceph_br }}_provide="net"
+rc_net_{{ ceph_br }}_need="ovs-vswitchd"

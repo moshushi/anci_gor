@@ -1,0 +1,55 @@
+---
+- name: Setup RAFT FLOATING --- Need debug block!!!!!!!!!!
+  hosts: '{{ myhosts }}'
+  # hosts: h-115
+  become: true
+  vars:
+    ceph_br: 'ceph'
+    port_tag: '93'
+    ceph_if: eno1
+    ceph_ip: '10.1.93.31/24'
+    # ceph_if: eno50
+    # ceph_ip: '10.1.93.36/24'
+    # ceph_if: eno50
+    # ceph_ip: '10.1.93.36/24'
+
+
+  tasks:
+    - name: Create bridge {{ ceph_br }} in Open vSwitch for Ceph
+      openvswitch.openvswitch.openvswitch_bridge:
+        bridge: '{{ ceph_br }}'
+        state: present
+
+    - name: Add {{ ceph_if }} to {{ ceph_br }} to Open vSwitch for 2_th need comment
+      openvswitch.openvswitch.openvswitch_port:
+        bridge: '{{ ceph_br }}'
+        port: '{{ ceph_if }}'
+        state: present
+
+    - name: Set tag vlan {{ ceph_if }} to {{ ceph_br }} to Open vSwitch
+      openvswitch.openvswitch.openvswitch_port:
+        bridge: '{{ ceph_br }}'
+        port: '{{ ceph_if }}'
+        tag: '{{ port_tag }}'
+        state: present
+        set: interface {{ ceph_br }}
+
+    - name: Create symbol link {{ ceph_if }} to net.lo
+      ansible.builtin.file:
+        path: /etc/init.d/net.{{ ceph_if }}
+        # path: /etc/init.d/net.hcs0
+        src: /etc/init.d/net.lo
+        state: link
+
+    - name: Add {{ ceph_if }} and {{ ceph_br }} to /etc/conf.d/net file
+      ansible.builtin.blockinfile:
+        path: /etc/conf.d/net
+        marker: "## {mark} CEPH settings interface"
+        block: "{{ lookup('ansible.builtin.template', 'templates/conf.d-net.ceph.j2') }}"
+
+    - name: Enable deamon for network interface {{ ceph_if }}
+      ansible.builtin.service:
+        name: net.{{ ceph_if }}
+        state: started
+        runlevel: default
+

@@ -7,14 +7,10 @@ ansible_become_password: ChangePassword#1
 # hcs_container: hcs_1.2.11_c3a223e2.tar.gz # предрелиз от Сергея
 # hcs_container: hcs_1.2.11.2.tar.gz
 # hcs_container: hcs_1.3.0.tar.xz
-# hcs_container: hcs_1.3.1_97d09a8e.tar.xz # 1.3.1
-# hcs_container: hcs_1.3.1_7adcb401.tar.xz # Комменты Лили
-# hcs_container: hcs_1.3.1_9548e236.tar.xz # Фстэк
-# hcs_container: hcs_1.3.1_b5f4548e.tar.xz
-# hcs_container: hcs_1.3.1_a8ddef11.tar.xz
-# hcs_container: hcs_1.3.1_f97af8fc.tar.xz
-# hcs_container: hcs_1.3.1_c39e0082.tar.xz
-hcs_container: hcs_1.3.1_53ad46ff.tar.xz
+# hcs_container: hcs_1.3.1_40f79ca3.tar.xz # ФСТЭК отправленная
+# hcs_container: hcs_1.3.1.tar.xz
+# hcs_container: hcs_1.3.1_40f79ca3.tar.xz
+hcs_container: hcs_1.3-fstec.tar.xz
 
 # image_tag: latest
 # image_tag: 1.2.11
@@ -23,14 +19,16 @@ hcs_container: hcs_1.3.1_53ad46ff.tar.xz
 # image_tag: 1.1.27
 # image_tag: 1.1.27-ceph
 # image_tag: 1.3.0
-image_tag: 1.3.1
+# image_tag: 1.3.1
+image_tag: 1.3-fstec
 
 # licnumber: 77E1371B
 # licnumber: D0887801
 # licnumber: 0402A68E
-licnumber: F2667EC4
+# licnumber: F2667EC4
 # licnumber: 9EE59863
 # licnumber: universal
+licnumber: 3h126
 
 
 
@@ -54,5 +52,6 @@ dns_server: 192.168.2.252
 # variable for get-web-local build
 web_build_path: "http://10.1.100.110/hcs/git"
 
-hvs_lvm_label: HR2112   # директория монтирования и запись в /boot
+hvs_lvm_label: HB301-fstec   # директория монтирования и запись в /boot
+# hvs_lvm_label: HR2112   # директория монтирования и запись в /boot
 hvs_boot_path_file: ['/boot/syslinux/syslinux.cfg', '/boot/efi/boot/syslinux.cfg']

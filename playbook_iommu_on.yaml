@@ -1,0 +1,26 @@
+---
+- name: Add iommu for path trough devices
+  hosts: '{{ myhosts }}'
+  become: true
+  # vars:
+  #   hvs_boot_path_file: [/boot/syslinux/syslinux.cfg]
+
+  tasks:
+    - name: Mount up from command
+      ansible.builtin.shell: mountpoint -q /boot || mount /boot
+
+    - name: Add iommu to APPEND string in {{ hvs_boot_path_file }}
+      ansible.builtin.replace:
+        path: "{{ item }}"
+        regexp: '(^.*?APPEND(?:(?!iommu).)*)'
+        replace: '\1 iommu=pt intel_iommu=on pcie_acs_override=downstream,multifunction'
+      loop: '{{ hvs_boot_path_file }}'
+      notify:
+        - Reboot Server
+
+    - name: umount down from command
+      ansible.builtin.shell: umount /boot
+
+  handlers:
+    - name: Reboot Server
+      ansible.builtin.reboot:
